@@ -14,9 +14,37 @@
 
 ## 三步开始
 
-1. 下载并解压，将包含本 README 的文件夹作为 Vault（Obsidian 的笔记库）打开。也可直接用 Markdown 编辑器阅读。
+1. 用下方命令获取模板，或下载 ZIP 解压。另建个人工作副本，将其作为 Vault（Obsidian 的笔记库）打开；也可用 Markdown 编辑器阅读。
 2. 阅读 [AI 操作说明](AGENTS.md) 和 [目录规范](30_System/schema.md)，再从 [模板目录](30_System/templates/) 选模板。将 owner 占位符换成自己的名称，填日期和受控标签。
 3. 选一个小项目：固定一份非敏感来源，提取一个有证据的问题，形成一篇可用 Lesson；只有确实能抽出执行流程时，再形成 Playbook。更新本地索引并记日志。
+
+## 命令行获取（推荐）
+
+电脑已有 Git 时，在希望存放模板的目录运行：
+
+```sh
+git clone https://github.com/barronli0523/personal-asset.git personal-asset-template
+```
+
+这会获取模板文件，不会安装 Obsidian 或启动 AI。首次完成后，保留 `personal-asset-template` 作为干净模板，另建个人工作副本，不复制 `.git` 历史目录。
+
+macOS / Linux 已有 Git 和 tar 时，可用以下命令创建无 Git 历史的个人副本；`my-assets` 必须是尚不存在的目录：
+
+```sh
+mkdir my-assets && (git -C personal-asset-template archive HEAD | tar -x -C my-assets)
+```
+
+然后在 Obsidian 选择“打开文件夹为仓库”，打开 `my-assets`。Windows 用户可新建个人目录后复制模板的可见内容，保留隐藏的 `.gitignore`，但不要复制 `.git` 目录。复制不会自动安装插件或模型服务。
+
+已安装 GitHub CLI 的用户，也可用以下命令替代上面的 `git clone`，两者任选其一：
+
+```sh
+gh repo clone barronli0523/personal-asset personal-asset-template
+```
+
+更新模板时只更新干净模板目录，人工查看变化后再合入个人副本；不要用新模板覆盖自己的笔记和索引。
+
+命令格式参考：[GitHub 克隆说明](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)、[GitHub CLI 手册](https://cli.github.com/manual/gh_repo_clone)。本说明未在所有操作系统实跑。
 
 ## 什么放在哪里
 
