@@ -7,8 +7,10 @@ updated: "{{YYYY-MM-DD}}"
 owner: "{{owner}}"
 tags:
   - type/data-governance
-source: []
+source: ["[[{{来源}}]]"]
 ---
+
+> 建立实例前填写可核对来源；无法确认来源时先记录到 review，不把空来源条目作为资产入库。
 
 ## 结论
 

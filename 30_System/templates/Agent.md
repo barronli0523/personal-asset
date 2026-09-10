@@ -7,13 +7,15 @@ updated: "{{YYYY-MM-DD}}"
 owner: "{{owner}}"
 tags:
   - type/agent
-source: []
+source: ["[[{{来源}}]]"]
 runtime: "{{codex | claude-code | dify | n8n | python | node | other}}"
 origin: "{{self-written | installed | forked}}"
 install_path: "{{本地路径或unknown}}"
 reuse_level: "{{high | medium | low}}"
 cost: "unknown"
 ---
+
+> 建立实例前填写可核对来源；无法确认来源时先记录到 review，不把空来源条目作为资产入库。
 
 ## 结论
 

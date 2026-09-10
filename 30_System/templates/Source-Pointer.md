@@ -9,7 +9,7 @@ tags:
   - type/source
 source: []
 external_path: "{{只读来源路径或URL}}"
-source_kind: "{{repo | codex-thread | chatgpt-thread | web | book | image | doc | dataset}}"
+source_kind: "{{repo | codex-thread | chatgpt-thread | web | book | image | doc | log | conversation | dataset}}"
 immutable: true
 captured_at: "{{YYYY-MM-DD}}"
 ---

@@ -29,7 +29,7 @@
 
 - `status`：draft / verified / stale / archived。AI 起草默认 draft，使用者确认结论后才 verified；状态不是软件上线等级。
 - `type`：project / agent / skill / data-governance / lesson / decision / playbook / book / idea / reflection / mental-model / insight / source / source-pointer / capture / side-quest / review-item / doc / index / log。
-- 日期用 YYYY-MM-DD；未知值写 unknown 或无法确认，合法空列表用 `[]`。
+- 日期用 YYYY-MM-DD；未知值写 unknown 或无法确认，合法空列表用 `[]`。工作资产实例的 source 必须指向可核对证据，不能用空列表或 unknown 代替来源；找不到来源时先写 review，不生成无证据资产。模板占位符必须在入库前替换。
 - YAML 是文件开头两条 `---` 之间的属性。占位符与双链值必须加引号；标签仅选 taxonomy 中实际词条，不能保留模板标签占位符。
 - 其他类型专属字段以模板为准。`source` 指证据，`derived_from` 指提炼来源，`related_project` 指所属项目，`reusable_assets` 列项目产出，`applies` 指适用场景。字段不是完成证明。
 
