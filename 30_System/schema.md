@@ -27,11 +27,41 @@
 
 资产必填 `type`、`title`、`status`、`created`、`updated`、`owner`、`tags`、`source`。特例：source-pointer 本身就是来源，以 external_path、captured_at、immutable 记录追溯信息；capture 使用捕获模板；review-item 用背景证据与 affected_files；规则和索引允许纯 Markdown。
 
-- `status`：draft / verified / stale / archived。AI 起草默认 draft，使用者确认结论后才 verified；状态不是软件上线等级。
+- `status`：draft / verified / stale / archived。AI 起草默认 draft；只有使用者明确确认结论正确且证据齐全后才 verified。批准候选的去向或执行动作不等于确认其全部声明为事实；状态不是软件上线等级。
 - `type`：project / agent / skill / data-governance / lesson / decision / playbook / book / idea / reflection / mental-model / insight / source / source-pointer / capture / side-quest / review-item / doc / index / log。
 - 日期用 YYYY-MM-DD；未知值写 unknown 或无法确认，合法空列表用 `[]`。工作资产实例的 source 必须指向可核对证据，不能用空列表或 unknown 代替来源；找不到来源时先写 review，不生成无证据资产。模板占位符必须在入库前替换。
 - YAML 是文件开头两条 `---` 之间的属性。占位符与双链值必须加引号；标签仅选 taxonomy 中实际词条，不能保留模板标签占位符。
 - 其他类型专属字段以模板为准。`source` 指证据，`derived_from` 指提炼来源，`related_project` 指所属项目，`reusable_assets` 列项目产出，`applies` 指适用场景。字段不是完成证明。
+
+## 复盘候选接收
+
+复用 `30_System/review/` 和 `Review-Item.md`，不新增接收目录或模板。一候选一文件，先查全库 index、已有 review、来源和正式资产。优先使用上游候选编号定位；无编号时用来源项目、证据锚点和候选问题/结论联合查重。同一来源可支持不同候选，不能仅凭路径相同判重。
+
+当 `category: asset-intake` 时，在普通 review 字段上增加：
+
+| 字段 | 要求 |
+|---|---|
+| `candidate_id` | 稳定且全库唯一；首次分配后不改 |
+| `candidate_version` | 正整数，从 1 开始；声明、证据、范围或目的地实质变化时递增 |
+| `origin` | 来源项目名称；项目地址、报告定位、上游编号放正文 |
+| `source` | 已核实 Sources / Source Pointer 链接列表；缺证据可为 `[]`，同时进入 needs-evidence |
+| `privacy` | private / restricted / public / unknown；unknown 按受限处理，public 不是发布授权 |
+| `review_state` | pending / needs-evidence / deferred / approved / rejected / duplicate / applied |
+| `resolved` | applied / rejected / duplicate 为 true；其余 false；与文件是否移动无关 |
+
+正文必须记录：解决的问题、复用场景与下一次具体动作、适用范围、例外与失效条件、逐条声明类型与核验结果、隐私检查范围、相似候选或资产、查重方法、推荐目的地与理由、需要人工决定的事项。
+
+声明类型只有五类：
+
+- **已验证事实**：有原始证据定位、核验动作和时间。
+- **推断**：列出事实前提、推理过程和未验证部分；无依据不能靠标注“推断”入库。
+- **估算**：允许明确标注的估算；记录输入来源、公式或方法、假设、误差或范围，无法量化时说明原因。
+- **个人判断**：标明判断者和来源；AI 建议不能冒充使用者观点。
+- **未知**：证据不足写 unknown / 无法确认，不补造数字或原因。
+
+状态约束：pending 等待决定；needs-evidence 先补证；deferred 记录再议条件；approved 表示当前版本的具体目的地和动作已获批准但尚未完全落盘；rejected / duplicate 原地结案；applied 表示授权动作、来源链接、索引和日志已经完成并验证。`applied` 不自动改变正式资产的 `status: draft`。失败时保留 approved，记录已完成动作、阻塞和重试检查，不重复创建同一产物。
+
+`20_Thinking` 仍需使用者明确确认具体观点。拒绝、暂缓和重复不自动创建 Decision，也不授权删除、合并或移动已有材料。
 
 ## 正文
 
